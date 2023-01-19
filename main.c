@@ -10,16 +10,17 @@
  *  - Sets CAN FD data phase for 2 MBaud
  *  - The interrupt pin is used for signal a received message, rather than polling
  *
- *   Pressing S1 will transmit a CAN message. S1 is on the MSP430FR6989 launchpad to the left.
+ *   Pressing S1 will transmit a CAN message.
+ *   S1 is on the MSP430FR6989/MSP430FR5994 launchpad to the left.
  *
- *  Pinout
- *   - P1.4 SPI Clock / SCLK
- *   - P1.6 MOSI / SDI
- *   - P1.7 MISO / SDO
- *   - P2.5 SPI Chip Select / nCS
+ *      Pinout          MSP430FR6989            MSP430FR5994
+ *   -  SCLK            P1.4                    P5.2
+ *   -  MOSI / SDI      P1.6                    P5.0
+ *   -  MISO / SDO      P1.7                    P5.1
+ *   -  ChipSelect/nCS  P2.5                    P5.3
  *
- *   - P2.3 MCAN Interrupt 1 / nINT
- *   - Ground wire is important
+ *   -  MCAN Int 1/nINT P2.3                    P1.4
+ *   - Ground wire is important!!!
  *
  *
  *
@@ -327,18 +328,18 @@ Init_GPIO()
 	GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P2, GPIO_PIN1);
 
 
-	// Configure P1.1 interrupt for S1 (left button on launchpad)
-	GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P1, GPIO_PIN1);
-	GPIO_selectInterruptEdge(GPIO_PORT_P1, GPIO_PIN1, GPIO_HIGH_TO_LOW_TRANSITION);
-	GPIO_clearInterrupt(GPIO_PORT_P1, GPIO_PIN1);
-	GPIO_enableInterrupt(GPIO_PORT_P1, GPIO_PIN1);
+	// Configure P5.6 interrupt for S1 (left button on launchpad)
+	GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P5, GPIO_PIN6);
+	GPIO_selectInterruptEdge(GPIO_PORT_P5, GPIO_PIN6, GPIO_HIGH_TO_LOW_TRANSITION);
+	GPIO_clearInterrupt(GPIO_PORT_P5, GPIO_PIN6);
+	GPIO_enableInterrupt(GPIO_PORT_P5, GPIO_PIN6);
 
 
-	// Configure P2.3 interrupt for MCAN Interrupt 1
-	GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P2, GPIO_PIN3);
-	GPIO_selectInterruptEdge(GPIO_PORT_P2, GPIO_PIN3, GPIO_HIGH_TO_LOW_TRANSITION);
-	GPIO_clearInterrupt(GPIO_PORT_P2, GPIO_PIN3);
-	GPIO_enableInterrupt(GPIO_PORT_P2, GPIO_PIN3);
+	// Configure P1.4 interrupt for MCAN Interrupt 1
+	GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P1, GPIO_PIN4);
+	GPIO_selectInterruptEdge(GPIO_PORT_P1, GPIO_PIN4, GPIO_HIGH_TO_LOW_TRANSITION);
+	GPIO_clearInterrupt(GPIO_PORT_P1, GPIO_PIN4);
+	GPIO_enableInterrupt(GPIO_PORT_P1, GPIO_PIN4);
 
 	// Set P4.1 and P4.2 as Secondary Module Function Input, LFXT.
 	GPIO_setAsPeripheralModuleFunctionInputPin(
@@ -350,30 +351,30 @@ Init_GPIO()
 	/*********************************************************
 	 * 					SPI Interface Pins
 	 *********************************************************/
-	//P1.4(SPI CLK on UCB0CLK)
+	//P5.2(SPI CLK on UCB0CLK)
 	GPIO_setAsPeripheralModuleFunctionOutputPin(
-		GPIO_PORT_P1,
-		GPIO_PIN4,
+		GPIO_PORT_P5,
+		GPIO_PIN2,
 		GPIO_PRIMARY_MODULE_FUNCTION
 	);
 
-	//P1.6(MOSI on UCB0SIMO)
+	//P5.0(MOSI on UCB0SIMO)
 	GPIO_setAsPeripheralModuleFunctionOutputPin(
-		GPIO_PORT_P1,
-		GPIO_PIN6,
+		GPIO_PORT_P5,
+		GPIO_PIN0,
 		GPIO_PRIMARY_MODULE_FUNCTION
 	);
 
-	//P1.7(MISO on UCB0SOMI)
+	//P5.1(MISO on UCB0SOMI)
 	GPIO_setAsPeripheralModuleFunctionInputPin(
-		GPIO_PORT_P1,
-		GPIO_PIN7,
+		GPIO_PORT_P5,
+		GPIO_PIN1,
 		GPIO_PRIMARY_MODULE_FUNCTION
 	);
 
-	//set P2.5 as SPI CS, already set to output above
-	GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN5);
-	GPIO_setOutputHighOnPin(GPIO_PORT_P2, GPIO_PIN5);
+	//set P5.3 as SPI CS, already set to output above
+	GPIO_setOutputLowOnPin(GPIO_PORT_P5, GPIO_PIN3);
+	GPIO_setOutputHighOnPin(GPIO_PORT_P5, GPIO_PIN3);
 
 	// Disable the GPIO power-on default high-impedance mode
 	// to activate previously configured port settings
