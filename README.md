@@ -9,7 +9,7 @@ Description: A basic version of code to set up and receive a packet.
 
 Pressing S1 will transmit a CAN message.
 S1 is on the MSP430FR6989/MSP430FR5994 launchpad to the left.
-
+```
    Pin             MSP430FR6989            MSP430FR5994
 -  MOSI / SDI      P1.6                    P5.0
 -  MISO / SDO      P1.7                    P5.1
@@ -17,4 +17,4 @@ S1 is on the MSP430FR6989/MSP430FR5994 launchpad to the left.
 -  ChipSelect/nCS  P2.5                    P5.3
 
 -  MCAN Int 1/nINT P2.3                    P1.4
-- Ground wire is important!!!
+- Ground wire is important!!!```
