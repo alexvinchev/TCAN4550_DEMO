@@ -186,7 +186,7 @@ void Init_CAN(void)
 
     /* Configure the CAN bus speeds */
     TCAN4x5x_MCAN_Nominal_Timing_Simple TCANNomTiming = {0};    // 500k arbitration with a 40 MHz crystal ((40E6 / 2) / (32 + 8) = 500E3)
-    TCANNomTiming.NominalBitRatePrescaler = 2;
+    TCANNomTiming.NominalBitRatePrescaler = 1;
     TCANNomTiming.NominalTqBeforeSamplePoint = 32;
     TCANNomTiming.NominalTqAfterSamplePoint = 8;
 
@@ -197,8 +197,8 @@ void Init_CAN(void)
 
     /* Configure the MCAN core settings */
     TCAN4x5x_MCAN_CCCR_Config cccrConfig = {0};                 // Remember to initialize to 0, or you'll get random garbage!
-    cccrConfig.FDOE = 1;                                        // CAN FD mode enable
-    cccrConfig.BRSE = 1;                                        // CAN FD Bit rate switch enable
+    cccrConfig.FDOE = 0;                                        // CAN FD mode enable
+    cccrConfig.BRSE = 0;                                        // CAN FD Bit rate switch enable
 
     /* Configure the default CAN packet filtering settings */
     TCAN4x5x_MCAN_Global_Filter_Configuration gfc = {0};
